@@ -19,7 +19,7 @@
 	      <div class="fill">
 	        <div class="container">
 	          <a class="brand" href="#">NES</a>
-	          <ul class="nav">
+	          <ul id="nav" class="nav">
 	            <li class="active"><a href="index.html">Home</a></li>
 	            <li><a href="help.html">Help</a></li>
 	          </ul>
@@ -48,6 +48,7 @@
         var nes;
 		function startgame(file){
 			$('#emulator').empty();
+			$('#game-controls').empty();
             nes = new JSNES({
 				'ui': $('#emulator').JSNESUI(file)
 				});
@@ -58,7 +59,7 @@
 					'ui': $('#emulator').JSNESUI(data[0].file)
 				});
 				if (data.length > 1){					
-					dropdown = $('<li class="dropdown" data-dropdown="dropdown"><a href="#" class="dropdown-toggle">Games</a><ul id="gameslist" class="dropdown-menu"></ul></li>').appendTo($("#game-controls"));
+					dropdown = $('<li class="dropdown" data-dropdown="dropdown"><a href="#" class="dropdown-toggle">Games</a><ul id="gameslist" class="dropdown-menu"></ul></li>').appendTo($("#nav"));
 					$.each(data, function(index, value){
 						$('<li><a href="#" data-stuff="' + value.file + '" onclick="startgame(\'' + value.file + '\');return false;">' + value.name + '</a></li>').appendTo($("#gameslist"));
 						});
