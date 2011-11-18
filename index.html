@@ -28,31 +28,9 @@
 		alert('hi there');
         $(function() {
 			$.getJSON('/games.json', function(data) {
-	            nes = new JSNES({data.file})
-				alert('hi there');
-				if (data.size() > 1){					
-				  alert('Multiple.');
-				}
-				else {
-					alert("One");
-				}
-			});		});
-       /* $(function() {
-            nes = new JSNES({
-                'ui': $('#emulator').JSNESUI({
-                    "Homebrew": [
-                        ['Concentration Room', 'roms/croom/croom.nes'],
-                        ['LJ65', 'roms/lj65/lj65.nes'],
-                    ],
-
-                    "Nearly Working": [
-                        ['Duck Hunt', 'local-roms/Duck Hunt (JUE) [!].nes'],
-                        ['Super Mario Bros. 3', 'local-roms/Super Mario Bros. 3 (U) (PRG1) [!].nes']
-                    ]
-                })
-            });
-        });
-*/
+	            nes = new JSNES({data})
+			});		
+		});
     </script>
     <!--[if IE]>
         <script type="text/vbscript" src="source/jsnes-ie-hacks.vbscript"></script>
