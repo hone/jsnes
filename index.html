@@ -47,23 +47,21 @@
     <script type="text/javascript" charset="utf-8">
         var nes;
 		function startgame(file){
+			$('#emulator').empty();
             nes = new JSNES({
 				'ui': $('#emulator').JSNESUI(file)
 				});
 		}
         $(function() {
 			$.getJSON('games.json', function(data) {
-				if (data.length == 1){					
-			            nes = new JSNES({
-							'ui': $('#emulator').JSNESUI(data[0].file)
-							});
-				}
-				else {
+			    nes = new JSNES({
+					'ui': $('#emulator').JSNESUI(data[0].file)
+				});
+				if (data.length > 1){					
 					dropdown = $('<li class="dropdown" data-dropdown="dropdown"><a href="#" class="dropdown-toggle">Games</a><ul id="gameslist" class="dropdown-menu"></ul></li>').appendTo($("#game-controls"));
-					
 					$.each(data, function(index, value){
 						$('<li><a href="#" data-stuff="' + value.file + '" onclick="startgame(\'' + value.file + '\');return false;">' + value.name + '</a></li>').appendTo($("#gameslist"));
-					});
+						});
 				}
 			});		
 		});
