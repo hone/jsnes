@@ -26,7 +26,7 @@ JSNES.DummyUI = function(nes) {
 
 if (typeof jQuery !== 'undefined') {
     (function($) {
-        $.fn.JSNESUI = function(roms) {
+        $.fn.JSNESUI = function(rom) {
             var parent = this;
             var UI = function(nes) {
                 var self = this;
@@ -46,21 +46,16 @@ if (typeof jQuery !== 'undefined') {
                 //self.romContainer = $('<div class="nes-roms"></div>').appendTo(self.root);
                 //self.romSelect = $('<select></select>').appendTo(self.romContainer);
                 
-                self.controls = $('<div class="nes-controls"></div>').appendTo(self.root);
+                self.controls = $("#game-controls");
                 self.buttons = {
-                    pause: $('<input type="button" value="pause" class="nes-pause" disabled="disabled">').appendTo(self.controls),
-                    restart: $('<input type="button" value="restart" class="nes-restart" disabled="disabled">').appendTo(self.controls),
-                    sound: $('<input type="button" value="enable sound" class="nes-enablesound">').appendTo(self.controls),
+                    pause: $('<li><a href="#" value="pause" id="nes-pause" class="nes-pause" disabled="disabled">Pause</a></li>').appendTo(self.controls),
+                    restart: $('<li><a href="#" value="restart" id="nes-restart" class="nes-restart" disabled="disabled">Restart</a></li>').appendTo(self.controls),
+                    sound: $('<li><a href="#" value="enable sound" id="nes-sound" class="nes-enablesound">Enable Sound</a></li>').appendTo(self.controls),
                 };
                 self.status = $('<p class="nes-status">Booting up...</p>').appendTo(self.root);
                 self.root.appendTo(parent);
                 
-                /*
-                 * ROM loading
-                 */
-                self.romSelect.change(function() {
-                    self.loadROM();
-                });
+                self.loadROM(rom);
                 
                 /*
                  * Buttons
@@ -68,12 +63,11 @@ if (typeof jQuery !== 'undefined') {
                 self.buttons.pause.click(function() {
                     if (self.nes.isRunning) {
                         self.nes.stop();
-                        self.updateStatus("Paused");
-                        self.buttons.pause.attr("value", "resume");
+                        $("#nes-pause").text("Resume");
                     }
                     else {
                         self.nes.start();
-                        self.buttons.pause.attr("value", "pause");
+                        $("#nes-pause").text("Pause");
                     }
                 });
         
@@ -82,14 +76,19 @@ if (typeof jQuery !== 'undefined') {
                     self.nes.start();
                 });
         
+                self.zoomed = true;
+                self.screen.animate({
+                                            width: '512px',
+                                            height: '480px'
+                                        });
                 self.buttons.sound.click(function() {
                     if (self.nes.opts.emulateSound) {
                         self.nes.opts.emulateSound = false;
-                        self.buttons.sound.attr("value", "enable sound");
+                        $("#nes-sound").text("Enable Sound");
                     }
                     else {
                         self.nes.opts.emulateSound = true;
-                        self.buttons.sound.attr("value", "disable sound");
+                        $("#nes-sound").text("Disable Sound");
                     }
                 });
         
@@ -194,7 +193,7 @@ if (typeof jQuery !== 'undefined') {
                 resetCanvas: function() {
                     this.canvasContext.fillStyle = 'black';
                     // set alpha to opaque
-                    this.canvasContext.fillRect(0, 0, 256, 240);
+                    this.canvasContext.fillRect(0, 0, 512, 480);
 
                     // Set alpha
                     for (var i = 3; i < this.canvasImageData.data.length-3; i += 4) {

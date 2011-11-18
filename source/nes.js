@@ -81,11 +81,6 @@ JSNES.prototype = {
                 this.frameInterval = setInterval(function() {
                     self.frame();
                 }, this.frameTime / 2);
-                this.resetFps();
-                this.printFps();
-                this.fpsInterval = setInterval(function() {
-                    self.printFps();
-                }, this.opts.fpsInterval);
             }
         }
         else {
@@ -159,19 +154,6 @@ JSNES.prototype = {
         }
         this.fpsFrameCount++;
         this.lastFrameTime = +new Date();
-    },
-    
-    printFps: function() {
-        var now = +new Date();
-        var s = 'Running';
-        if (this.lastFpsTime) {
-            s += ': '+(
-                this.fpsFrameCount / ((now - this.lastFpsTime) / 1000)
-            ).toFixed(2)+' FPS';
-        }
-        this.ui.updateStatus(s);
-        this.fpsFrameCount = 0;
-        this.lastFpsTime = now;
     },
     
     stop: function() {
