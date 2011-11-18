@@ -25,8 +25,10 @@
     <script src="/source/ui.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
         var nes;
+		alert('hi there');
         $(function() {
 			$.getJSON('/games.json', function(data) {
+	            nes = new JSNES({data.file})
 				alert('hi there');
 				if (data.size() > 1){					
 				  alert('Multiple.');
