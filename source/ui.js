@@ -156,11 +156,11 @@ if (typeof jQuery !== 'undefined') {
             };
         
             UI.prototype = {    
-                loadROM: function() {
+                loadROM: function(val) {
                     var self = this;
                     self.updateStatus("Downloading...");
                     $.ajax({
-                        url: escape(self.romSelect.val()),
+                        url: escape(val),
                         xhr: function() {
                             var xhr = $.ajaxSettings.xhr();
                             if (typeof xhr.overrideMimeType !== 'undefined') {

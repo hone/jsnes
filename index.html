@@ -30,6 +30,7 @@
 			alert('hi there2');
 			$.getJSON('/games.json', function(data) {
 	            nes = new JSNES(data);
+				nes.loadROM(data.value);
 			});		
 		});
     </script>
